@@ -5,8 +5,11 @@ public interface Equation {
 
     boolean specifyUnknown(String unknown);
 
-    void addValue(String specifyValue, double value);
+    boolean addValue(String specifyValue, double value);
 
-    double getResult();
+    double calculateResult();
 
+    String getEqType();
+
+    String getUnknown();
 }
