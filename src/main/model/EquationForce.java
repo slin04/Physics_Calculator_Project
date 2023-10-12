@@ -35,4 +35,28 @@ public class EquationForce extends Equation {
         return result;
     }
 
+    // EFFECTS: displays equation information as a String
+    public String displayEquationState() {
+        return "Equation Type: Force\n"
+                +
+                "Formula: f = m*a\n"
+                +
+                "f : " + getValue("f") + "\n"
+                +
+                "m : " + getValue("m") + "\n"
+                +
+                "a : " + getValue("a");
+    }
+
+    // EFFECTS: returns value of desired variable in string format depending on if it is unknown or uninitialized
+    private String getValue(String var) {
+        if (var.equals(unknown)) {
+            return "unknown";
+        } else if (variables.get(var) == null) {
+            return "no input";
+        } else {
+            return String.valueOf(variables.get(var));
+        }
+    }
+
 }

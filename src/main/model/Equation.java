@@ -39,6 +39,8 @@ public abstract class Equation {
 
     abstract Double calculateResult();
 
+    abstract String displayEquationState();
+
     protected HashMap<String, Double> getVariables() {
         return variables;
     }

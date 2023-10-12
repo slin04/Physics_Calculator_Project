@@ -94,4 +94,26 @@ public class EquationForceTest {
         forceEq.addValue("a", 80);
         assertEquals(2.5, forceEq.calculateResult());
     }
+
+    @Test
+    void testDisplayEquationStateEmpty() {
+        String expected = "Equation Type: Force\n" +
+                "Formula: f = m*a\n" +
+                "f : no input\n" +
+                "m : no input\n" +
+                "a : no input";
+        assertEquals(expected, forceEq.displayEquationState());
+    }
+
+    @Test
+    void testDisplayEquationStateVarying() {
+        forceEq.specifyUnknown("f");
+        forceEq.addValue("m", 100);
+        String expected = "Equation Type: Force\n" +
+                "Formula: f = m*a\n" +
+                "f : unknown\n" +
+                "m : 100.0\n" +
+                "a : no input";
+        assertEquals(expected, forceEq.displayEquationState());
+    }
 }

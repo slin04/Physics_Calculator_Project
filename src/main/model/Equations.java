@@ -24,9 +24,21 @@ public class Equations {
         }
     }
 
+    // EFFECTS: displays all equations on list by calling displayEquationState method on every equation
+    public String displayEquations() {
+        String display = "";
+        for (Equation eq: equationList) {
+            display += eq.displayEquationState() + "\n\n";
+        }
+        return display;
+    }
+
+    public Equation getEquation(int index) {
+        return equationList.get(index);
+    }
+
     public List<Equation> getListOfEquations() {
         return equationList;
     }
-
 
 }

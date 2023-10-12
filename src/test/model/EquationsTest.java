@@ -56,4 +56,33 @@ public class EquationsTest {
         listOfEquations = equations.getListOfEquations();
         assertEquals(0, listOfEquations.size());
     }
+
+    @Test
+    void testDisplayEquations() {
+        Equation forceEquation1 = new EquationForce();
+        forceEquation1.specifyUnknown("f");
+        forceEquation1.addValue("m", 35);
+
+        Equation forceEquation2 = new EquationForce();
+        forceEquation1.specifyUnknown("a");
+        forceEquation1.addValue("f", 253);
+
+        equations.addNewEquation(forceEquation1);
+        equations.addNewEquation(forceEquation2);
+
+        String expected = "Equation Type: Force\n" +
+                "Formula: f = m*a\n" +
+                "f : 253.0\n" +
+                "m : 35.0\n" +
+                "a : unknown\n" +
+                "\n" +
+                "Equation Type: Force\n" +
+                "Formula: f = m*a\n" +
+                "f : no input\n" +
+                "m : no input\n" +
+                "a : no input\n" +
+                "\n";
+
+        assertEquals(expected, equations.displayEquations());
+    }
 }
