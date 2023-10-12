@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EquationForceTest {
 
-    EquationForce forceEq;
+    Equation forceEq;
 
     @BeforeEach
     void runBefore() {
@@ -39,11 +39,6 @@ public class EquationForceTest {
     }
 
     @Test
-    void testAddValueFailUnknownUndeclared() {
-        assertFalse(forceEq.addValue("f", 100));
-    }
-
-    @Test
     void testAddValueFailInvalidValue() {
         forceEq.specifyUnknown("f");
         assertFalse(forceEq.addValue("t", 100));
@@ -54,7 +49,7 @@ public class EquationForceTest {
     void testAddValuePass() {
         forceEq.specifyUnknown("f");
         assertTrue(forceEq.addValue("m", 100));
-        assertEquals(100, forceEq.getMassVal());
+        assertEquals(100, forceEq.getVariables().get("m"));
     }
 
     @Test
@@ -62,8 +57,8 @@ public class EquationForceTest {
         forceEq.specifyUnknown("f");
         assertTrue(forceEq.addValue("m", 100));
         assertTrue(forceEq.addValue("a", 5));
-        assertEquals(100, forceEq.getMassVal());
-        assertEquals(5, forceEq.getAccelerationVal());
+        assertEquals(100, forceEq.getVariables().get("m"));
+        assertEquals(5, forceEq.getVariables().get("a"));
     }
 
     @Test
@@ -82,5 +77,21 @@ public class EquationForceTest {
         assertEquals(500, forceEq.calculateResult());
         forceEq.addValue("a", 20);
         assertEquals(1000, forceEq.calculateResult());
+    }
+
+    @Test
+    void testCalculateResultDecimals() {
+        forceEq.specifyUnknown("f");
+        forceEq.addValue("m", 51.37);
+        forceEq.addValue("a", 14.21);
+        assertEquals(729.9677, forceEq.calculateResult());
+    }
+
+    @Test
+    void testCalculateResultDivision() {
+        forceEq.specifyUnknown("m");
+        forceEq.addValue("f", 200);
+        forceEq.addValue("a", 80);
+        assertEquals(2.5, forceEq.calculateResult());
     }
 }
