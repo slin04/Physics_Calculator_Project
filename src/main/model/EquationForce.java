@@ -5,7 +5,7 @@ import java.util.List;
 
 public class EquationForce extends Equation {
 
-    protected EquationForce() {
+    public EquationForce() {
         super();
         eqType = "Force";
         variables.put("f", null);
