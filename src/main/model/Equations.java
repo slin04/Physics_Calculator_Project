@@ -28,7 +28,7 @@ public class Equations {
     public String displayEquations() {
         String display = "";
         for (Equation eq: equationList) {
-            display += eq.displayEquationState() + "\n\n";
+            display += "\n" + eq.displayEquationState() + "\n";
         }
         return display;
     }

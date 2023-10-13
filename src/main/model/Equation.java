@@ -16,7 +16,7 @@ public abstract class Equation {
 
     // MODIFIES: this
     // EFFECTS: if unknown is in variables, then set this.unknown with that value and return true, else return false
-    protected boolean specifyUnknown(String unknown) {
+    public boolean specifyUnknown(String unknown) {
         if (variables.containsKey(unknown)) {
             this.unknown = unknown;
             return true;
@@ -28,7 +28,7 @@ public abstract class Equation {
     // MODIFIES: this
     // EFFECTS: if specifyValue is in variables, and specifyValue is not the unknown, then set the
     //          variable to value and return true, else return false
-    protected boolean addValue(String specifyValue, double value) {
+    public boolean addValue(String specifyValue, double value) {
         if (variables.containsKey(specifyValue) && !specifyValue.equals(unknown)) {
             variables.put(specifyValue, value);
             return true;
@@ -37,11 +37,11 @@ public abstract class Equation {
         }
     }
 
-    abstract Double calculateResult();
+    public abstract Double calculateResult();
 
-    abstract String displayEquationState();
+    public abstract String displayEquationState();
 
-    protected HashMap<String, Double> getVariables() {
+    public HashMap<String, Double> getVariables() {
         return variables;
     }
 

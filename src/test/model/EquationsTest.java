@@ -70,7 +70,8 @@ public class EquationsTest {
         equations.addNewEquation(forceEquation1);
         equations.addNewEquation(forceEquation2);
 
-        String expected = "Equation Type: Force\n" +
+        String expected = "\n" +
+                "Equation Type: Force\n" +
                 "Formula: f = m*a\n" +
                 "f : 253.0\n" +
                 "m : 35.0\n" +
@@ -80,8 +81,7 @@ public class EquationsTest {
                 "Formula: f = m*a\n" +
                 "f : no input\n" +
                 "m : no input\n" +
-                "a : no input\n" +
-                "\n";
+                "a : no input\n";
 
         assertEquals(expected, equations.displayEquations());
     }
