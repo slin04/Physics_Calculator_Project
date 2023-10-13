@@ -79,9 +79,12 @@ public class PhysicsPlayer {
             } else if (input.equals("Density")) {
                 newEquationDensity();
                 break;
+            } else if (input.equals("Flow Rate")) {
+                newEquationFlowRate();
+                break;
             } else {
                 System.out.println("Please enter a valid equation type:");
-                System.out.println("Valid equation types are Force, and Density.");
+                System.out.println("Valid equation types are Force, Density, and Flow Rate.");
             }
         }
     }
@@ -102,6 +105,15 @@ public class PhysicsPlayer {
         equations.addNewEquation(newDensityEq);
         selected = equations.getListOfEquations().size();
         System.out.println("Made Density Equation! Density Equation is selected!");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates new density equation
+    private void newEquationFlowRate() {
+        Equation newFlowRateEq = new EquationFlowRate();
+        equations.addNewEquation(newFlowRateEq);
+        selected = equations.getListOfEquations().size();
+        System.out.println("Made Flow Rate Equation! Flow Rate Equation is selected!");
     }
 
     // MODIFIES: this
