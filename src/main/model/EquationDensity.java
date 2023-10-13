@@ -3,15 +3,15 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-// Represents the equation for force
-public class EquationForce extends Equation {
+// Represents the equation for density
+public class EquationDensity extends Equation {
 
-    public EquationForce() {
+    public EquationDensity() {
         super();
-        eqType = "Force";
-        variables.put("f", null);
+        eqType = "Density";
+        variables.put("d", null);
         variables.put("m", null);
-        variables.put("a", null);
+        variables.put("v", null);
     }
 
     // REQUIRES: unknown is specified, other variables have values
@@ -23,32 +23,30 @@ public class EquationForce extends Equation {
 
         Double result;
 
-        if (unknown.equals("f")) {
-            result = variables.get("m") * variables.get("a");
-            variables.put("f", result);
+        if (unknown.equals("d")) {
+            result = variables.get("m") / variables.get("v");
+            variables.put("d", result);
         } else if (unknown.equals("m")) {
-            result = variables.get("f") / variables.get("a");
+            result = variables.get("v") * variables.get("d");
             variables.put("m", result);
         } else {
-            result = variables.get("f") / variables.get("m");
-            variables.put("a", result);
+            result = variables.get("m") / variables.get("d");
+            variables.put("v", result);
         }
         return result;
     }
 
     // EFFECTS: displays equation information as a String
-    @Override
     public String displayEquationState() {
         return "Equation Type: " + eqType + "\n"
                 +
-                "Formula: f = m*a\n"
+                "Formula: d = m/v\n"
                 +
-                "f : " + getValue("f") + "\n"
+                "d : " + getValue("d") + "\n"
                 +
                 "m : " + getValue("m") + "\n"
                 +
-                "a : " + getValue("a");
+                "v : " + getValue("v");
     }
-
 
 }

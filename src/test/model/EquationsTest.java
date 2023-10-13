@@ -47,12 +47,11 @@ public class EquationsTest {
         Equation forceEquation1 = new EquationForce();
         equations.addNewEquation(forceEquation1);
 
-        assertFalse(equations.removeEquation(1));
         List<Equation> listOfEquations = equations.getListOfEquations();
         assertEquals(1, listOfEquations.size());
         assertEquals(forceEquation1, listOfEquations.get(0));
 
-        assertTrue(equations.removeEquation(0));
+        equations.removeEquation(0);
         listOfEquations = equations.getListOfEquations();
         assertEquals(0, listOfEquations.size());
     }

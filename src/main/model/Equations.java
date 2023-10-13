@@ -11,17 +11,12 @@ public class Equations {
         equationList.add(equation);
     }
 
-    // REQUIRES: equationIndex is non-negative
+    // REQUIRES: equationIndex is non-negative and size of equationList is greater than equationIndex
     // MODIFIES: this
     // EFFECTS: equationIndex represents the index of the position that is to be removed, starting at 0.
-    //          if an equation exists at the index, remove the equation and return true, else return false
-    public boolean removeEquation(int equationIndex) {
-        if (equationList.size() > equationIndex) {
-            equationList.remove(equationIndex);
-            return true;
-        } else {
-            return false;
-        }
+    //          remove the equation from equationList
+    public void removeEquation(int equationIndex) {
+        equationList.remove(equationIndex);
     }
 
     // EFFECTS: displays all equations on list by calling displayEquationState method on every equation
