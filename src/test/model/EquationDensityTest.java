@@ -62,7 +62,7 @@ public class EquationDensityTest {
     }
 
     @Test
-    void testCalculateResult() {
+    void testCalculateResultDensity() {
         densityEq.specifyUnknown("d");
         densityEq.addValue("m", 500);
         densityEq.addValue("v", 10);
@@ -70,7 +70,7 @@ public class EquationDensityTest {
     }
 
     @Test
-    void testCalculateAndChangeValue() {
+    void testCalculateDensityChanged() {
         densityEq.specifyUnknown("d");
         densityEq.addValue("m", 500);
         densityEq.addValue("v", 10);
@@ -78,6 +78,43 @@ public class EquationDensityTest {
         densityEq.addValue("v", 200);
         assertEquals(2.50, densityEq.calculateResult());
     }
+
+    @Test
+    void testCalculateResultMass() {
+        densityEq.specifyUnknown("m");
+        densityEq.addValue("d", 1000);
+        densityEq.addValue("v", 3);
+        assertEquals(3000, densityEq.calculateResult());
+    }
+
+    @Test
+    void testCalculateResultMassChanged() {
+        densityEq.specifyUnknown("m");
+        densityEq.addValue("d", 1000);
+        densityEq.addValue("v", 3);
+        assertEquals(3000, densityEq.calculateResult());
+        densityEq.addValue("v", 4);
+        assertEquals(4000, densityEq.calculateResult());
+    }
+
+    @Test
+    void testCalculateResultVolume() {
+        densityEq.specifyUnknown("v");
+        densityEq.addValue("m", 500);
+        densityEq.addValue("d", 10);
+        assertEquals(50, densityEq.calculateResult());
+    }
+
+    @Test
+    void testCalculateResultVolumeChanged() {
+        densityEq.specifyUnknown("v");
+        densityEq.addValue("m", 500);
+        densityEq.addValue("d", 10);
+        assertEquals(50, densityEq.calculateResult());
+        densityEq.addValue("d", 20);
+        assertEquals(25, densityEq.calculateResult());
+    }
+
 
     @Test
     void testDisplayEquationStateEmpty() {

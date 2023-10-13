@@ -88,11 +88,39 @@ public class EquationForceTest {
     }
 
     @Test
-    void testCalculateResultDivision() {
+    void testCalculateResultMass() {
+        forceEq.specifyUnknown("m");
+        forceEq.addValue("f", 200);
+        forceEq.addValue("a", 100);
+        assertEquals(2, forceEq.calculateResult());
+    }
+
+    @Test
+    void testCalculateResultMassMultiple() {
         forceEq.specifyUnknown("m");
         forceEq.addValue("f", 200);
         forceEq.addValue("a", 80);
         assertEquals(2.5, forceEq.calculateResult());
+        forceEq.addValue("f", 160);
+        assertEquals(2, forceEq.calculateResult());
+    }
+
+    @Test
+    void testCalculateResultAcceleration() {
+        forceEq.specifyUnknown("a");
+        forceEq.addValue("f", 200);
+        forceEq.addValue("m", 100);
+        assertEquals(2, forceEq.calculateResult());
+    }
+
+    @Test
+    void testCalculateResultAccelerationMultiple() {
+        forceEq.specifyUnknown("a");
+        forceEq.addValue("f", 200);
+        forceEq.addValue("m", 80);
+        assertEquals(2.5, forceEq.calculateResult());
+        forceEq.addValue("f", 160);
+        assertEquals(2, forceEq.calculateResult());
     }
 
     @Test
@@ -114,6 +142,20 @@ public class EquationForceTest {
                 "f : unknown\n" +
                 "m : 100.0\n" +
                 "a : no input";
+        assertEquals(expected, forceEq.displayEquationState());
+    }
+
+    @Test
+    void testDisplayEquationStateSolved() {
+        forceEq.specifyUnknown("f");
+        forceEq.addValue("m", 100);
+        forceEq.addValue("a", 5);
+        forceEq.calculateResult();
+        String expected = "Equation Type: Force\n" +
+                "Formula: f = m*a\n" +
+                "f : 500.0\n" +
+                "m : 100.0\n" +
+                "a : 5.0";
         assertEquals(expected, forceEq.displayEquationState());
     }
 }

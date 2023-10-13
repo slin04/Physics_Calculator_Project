@@ -15,9 +15,9 @@ conceptual aspect.
 ## User Stories
 
 - As a user, I want to be able to add a new equation to my list of equations.
-- As a user, I want to be able to enter the known values for an equation, and either 
-receive the value I'm trying to solve for, or a notification that I did not provide 
-sufficient information. 
+- As a user, I want to be able to specify the unknown values and enter the known values 
+for an equation, and either get the result or be notified that I did not enter sufficient
+information.
 - As a user, I want to be able to view my entire list of equations, and see the status
 of each equation.
 - As a user, I want to be able to delete any equation from my list of equations.

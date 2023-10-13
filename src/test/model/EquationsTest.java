@@ -28,6 +28,7 @@ public class EquationsTest {
         List<Equation> listOfEquations = equations.getListOfEquations();
         assertEquals(1, listOfEquations.size());
         assertEquals(forceEquation1, listOfEquations.get(0));
+        assertEquals(forceEquation1, equations.getEquation(0));
     }
 
     @Test
@@ -39,7 +40,9 @@ public class EquationsTest {
         List<Equation> listOfEquations = equations.getListOfEquations();
         assertEquals(2, listOfEquations.size());
         assertEquals(forceEquation1, listOfEquations.get(0));
+        assertEquals(forceEquation1, equations.getEquation(0));
         assertEquals(forceEquation2, listOfEquations.get(1));
+        assertEquals(forceEquation2, equations.getEquation(1));
     }
 
     @Test
@@ -50,6 +53,7 @@ public class EquationsTest {
         List<Equation> listOfEquations = equations.getListOfEquations();
         assertEquals(1, listOfEquations.size());
         assertEquals(forceEquation1, listOfEquations.get(0));
+        assertEquals(forceEquation1, equations.getEquation(0));
 
         equations.removeEquation(0);
         listOfEquations = equations.getListOfEquations();

@@ -279,7 +279,7 @@ public class PhysicsPlayer {
 
     // EFFECTS: returns the string containing the information of the currently selected equation
     private String view() {
-        return equations.getEquation(selected - 1).displayEquationState();
+        return "\n" + equations.getEquation(selected - 1).displayEquationState() + "\n";
     }
 
     // EFFECTS: returns the string containing information of all equations in the list, unless there are none
