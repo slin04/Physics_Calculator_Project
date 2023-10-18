@@ -6,6 +6,7 @@ import java.util.List;
 // Represents the equation for force
 public class EquationFlowRate extends Equation {
 
+    // EFFECTS: initializes constructor, setting eqType to "Flow Rate" and adding respective variables to hashmap
     public EquationFlowRate() {
         super();
         eqType = "Flow Rate";

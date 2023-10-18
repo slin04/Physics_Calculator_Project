@@ -2,6 +2,7 @@ package model;
 
 import java.util.*;
 
+// Represents a list of equations that can be manipulated in various ways
 public class Equations {
     private List<Equation> equationList = new ArrayList<Equation>();
 

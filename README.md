@@ -23,3 +23,8 @@ of each equation.
 - As a user, I want to be able to delete any equation from my list of equations.
 - As a user, I want to be able to modify the input values for an equation from my list
 and see the new result.
+
+### Phase 2 
+
+- As a user, I want to be able to save the entire list of equations to file.
+- As a user, I want to be able to load my list of equations from file.

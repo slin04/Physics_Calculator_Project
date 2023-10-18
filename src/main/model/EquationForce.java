@@ -6,6 +6,7 @@ import java.util.List;
 // Represents the equation for force
 public class EquationForce extends Equation {
 
+    // EFFECTS: initializes constructor, setting eqType to "Force" and adding respective variables to hashmap
     public EquationForce() {
         super();
         eqType = "Force";

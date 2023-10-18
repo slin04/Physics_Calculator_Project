@@ -6,6 +6,7 @@ import java.util.List;
 // Represents the equation for density
 public class EquationDensity extends Equation {
 
+    // EFFECTS: initializes constructor, setting eqType to "Density" and adding respective variables to hashmap
     public EquationDensity() {
         super();
         eqType = "Density";

@@ -11,6 +11,7 @@ public abstract class Equation {
     protected String unknown;
     protected String eqType;
 
+    // EFFECTS: initializes equation with an unspecified unknown value
     protected Equation() {
         unknown = null;
     }
