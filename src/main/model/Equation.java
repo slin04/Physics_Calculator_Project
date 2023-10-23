@@ -1,15 +1,19 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.HashMap;
 
 // Represents an equation with a hashmap with the keys representing variable names, and the values representing
 // variable values
-public abstract class Equation {
+public abstract class Equation implements Writable {
 
     protected HashMap<String, Double> variables = new HashMap<String, Double>();
 
     protected String unknown;
     protected String eqType;
+
 
     // EFFECTS: initializes equation with an unspecified unknown value
     protected Equation() {
@@ -65,6 +69,15 @@ public abstract class Equation {
 
     // EFFECTS: displays equation information as a String
     public abstract String displayEquationState();
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Equation Type", getEqType());
+        json.put("unknown", unknown);
+        json.put("variables", new JSONObject(variables));
+        return json;
+    }
 
     public HashMap<String, Double> getVariables() {
         return variables;

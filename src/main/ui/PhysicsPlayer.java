@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import java.lang.NumberFormatException;
 
+
 // The player that communicates between the user and the list of equations
 public class PhysicsPlayer {
 

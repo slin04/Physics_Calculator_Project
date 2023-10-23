@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.*;
 
 // Represents a list of equations that can be manipulated in various ways
-public class Equations {
+public class Equations implements Writable {
     private List<Equation> equationList = new ArrayList<Equation>();
 
     // MODIFIES: this
@@ -35,6 +39,24 @@ public class Equations {
 
     public List<Equation> getListOfEquations() {
         return equationList;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Equations", equationListToJson());
+        return json;
+    }
+
+    // EFFECTS: returns things in this workroom as a JSON array
+    private JSONArray equationListToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Equation e: equationList) {
+            jsonArray.put(e.toJson());
+        }
+
+        return jsonArray;
     }
 
 }
