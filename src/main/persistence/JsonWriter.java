@@ -25,8 +25,8 @@ public class JsonWriter {
 
     // MODIFIES: this
     // EFFECTS: writes JSON representation of Equations to file
-    public void write(Equations wr) {
-        JSONObject json = wr.toJson();
+    public void write(Equations eq) {
+        JSONObject json = eq.toJson();
         saveToFile(json.toString(TAB));
     }
 

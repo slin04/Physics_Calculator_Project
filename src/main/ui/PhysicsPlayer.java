@@ -1,7 +1,11 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -11,13 +15,18 @@ import java.lang.NumberFormatException;
 // The player that communicates between the user and the list of equations
 public class PhysicsPlayer {
 
-    Equations equations;
+    private Equations equations;
+    private static final String JSON_STORE = "./data/equations.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-    int selected;
+    int selected = 1;
 
     // Creates a new set of equations and starts the program
     public PhysicsPlayer() {
         equations = new Equations();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         run();
     }
 
@@ -31,6 +40,7 @@ public class PhysicsPlayer {
     }
 
     // EFFECTS: takes in input and runs appropriate method
+    @SuppressWarnings("methodlength")
     private void processInput(String input) {
         if (input.equals("help")) {
             help();
@@ -50,6 +60,10 @@ public class PhysicsPlayer {
             System.out.println(view());
         } else if (input.equals("view all")) {
             System.out.println(viewAll());
+        } else if (input.equals("save")) {
+            saveEquations();
+        } else if (input.equals("load")) {
+            loadEquations();
         } else {
             System.out.println("Please enter a valid command. Enter \"help\" to view commands!");
         }
@@ -65,7 +79,9 @@ public class PhysicsPlayer {
         System.out.println("enter - enters known value for the selected equation");
         System.out.println("solve - attempts to solve selected equation with given information");
         System.out.println("view - displays status of selected equation");
-        System.out.println("view all - displays status of all equations in list\n");
+        System.out.println("view all - displays status of all equations in list");
+        System.out.println("save - saves equations to file");
+        System.out.println("load - loads equations from file\n");
         System.out.println("NOTE: The list of equations starts with an index at 1. This means that the first equation"
                             + " added to the list will have index 1, the second equation will have index 2, etc");
     }
@@ -294,7 +310,12 @@ public class PhysicsPlayer {
 
     // EFFECTS: returns the string containing the information of the currently selected equation
     private String view() {
-        return "\n" + equations.getEquation(selected - 1).displayEquationState() + "\n";
+        if (!isEmpty()) {
+            return "\n" + equations.getEquation(selected - 1).displayEquationState() + "\n";
+        }
+
+        return "You have no equations right now! Use \"new eq\" to make one!";
+
     }
 
     // EFFECTS: returns the string containing information of all equations in the list, unless there are none
@@ -303,6 +324,29 @@ public class PhysicsPlayer {
             return "You have no equations right now! Use \"new eq\" to make one!";
         } else {
             return "Here are all equations made so far:\n" + equations.displayEquations();
+        }
+    }
+
+    // EFFECTS: saves the equations to file
+    private void saveEquations() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(equations);
+            jsonWriter.close();
+            System.out.println("Saved equations to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads equations from file
+    private void loadEquations() {
+        try {
+            equations = jsonReader.read();
+            System.out.println("Loaded equations from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 

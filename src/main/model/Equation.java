@@ -74,7 +74,11 @@ public abstract class Equation implements Writable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Equation Type", getEqType());
-        json.put("unknown", unknown);
+        if (unknown == null) {
+            json.put("unknown", "null");
+        } else {
+            json.put("unknown", unknown);
+        }
         json.put("variables", new JSONObject(variables));
         return json;
     }

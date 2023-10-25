@@ -44,7 +44,7 @@ public class JsonReader {
     private Equations parseEquations(JSONObject jsonObject) {
         Equations equations = new Equations();
         addEquations(equations, jsonObject);
-        return null;
+        return equations;
     }
 
     // MODIFIES: equations
@@ -58,10 +58,13 @@ public class JsonReader {
     }
 
     // MODIFIES: equations
-    // EFFECTS: parses thingy from JSON object and adds it to workroom
+    // EFFECTS: parses equation from JSON object and adds it to workroom
     private void addEquation(Equations equations, JSONObject jsonObject) {
         String equationType = jsonObject.getString("Equation Type");
         String unknown = jsonObject.getString("unknown");
+        if (unknown.equals("null")) {
+            unknown = null;
+        }
         JSONObject variables = jsonObject.getJSONObject("variables");
         Equation equation = makeEquation(equationType, unknown, variables);
         equations.addNewEquation(equation);
