@@ -22,7 +22,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads equations from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Equations read() throws IOException {
         String jsonData = readFile(source);
@@ -49,7 +49,7 @@ public class JsonReader {
     }
 
     // MODIFIES: equations
-    // EFFECTS: parses equations from JSON object and adds them to workroom
+    // EFFECTS: parses equations from JSON object and adds them to equations
     private void addEquations(Equations equations, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("Equations");
         for (Object json : jsonArray) {
@@ -59,7 +59,7 @@ public class JsonReader {
     }
 
     // MODIFIES: equations
-    // EFFECTS: parses equation from JSON object and adds it to workroom
+    // EFFECTS: parses equation from JSON object and adds it to equations
     private void addEquation(Equations equations, JSONObject jsonObject) {
         String equationType = jsonObject.getString("Equation Type");
         String unknown = jsonObject.getString("unknown");

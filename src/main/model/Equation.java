@@ -72,7 +72,6 @@ public abstract class Equation implements Writable {
 
     // EFFECTS: checks that unknown is instantiated, and all known variables have values
     public boolean readyToSolve() {
-
         if (unknown == null) {
             return false;
         }
@@ -86,6 +85,7 @@ public abstract class Equation implements Writable {
     }
 
     @Override
+    // Converts equation to JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Equation Type", getEqType());

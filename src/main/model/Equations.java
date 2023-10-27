@@ -42,13 +42,14 @@ public class Equations implements Writable {
     }
 
     @Override
+    // Converts equations to JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Equations", equationListToJson());
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns equationList as a JSON array
     private JSONArray equationListToJson() {
         JSONArray jsonArray = new JSONArray();
 
