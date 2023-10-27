@@ -1,0 +1,34 @@
+{"Equations": [
+    {
+        "variables": {},
+        "Equation Type": "Force",
+        "unknown": "null"
+    },
+    {
+        "variables": {},
+        "Equation Type": "Density",
+        "unknown": "d"
+    },
+    {
+        "variables": {"v2": 10},
+        "Equation Type": "Flow Rate",
+        "unknown": "a2"
+    },
+    {
+        "variables": {
+            "a": 21,
+            "m": 35
+        },
+        "Equation Type": "Force",
+        "unknown": "f"
+    },
+    {
+        "variables": {
+            "a": 56,
+            "m": 23,
+            "f": 1288
+        },
+        "Equation Type": "Force",
+        "unknown": "f"
+    }
+]}

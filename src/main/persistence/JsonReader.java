@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import org.json.*;
 
 // Represents a reader that reads Equations from JSON data stored in file
+// Code influenced by the JsonSerializationDemo: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonReader {
     private String source;
 
@@ -84,6 +85,7 @@ public class JsonReader {
             equation = new EquationFlowRate();
         }
 
+        // Specify unknown if unknown is not null
         if (unknown != null) {
             equation.specifyUnknown(unknown);
         }
@@ -96,12 +98,23 @@ public class JsonReader {
     // MODIFIES: equation
     // EFFECTS: adds all variables to equation
     private void addVariables(Equation equation, Map<String, Object> variableMap) {
+
+        // When unknown is specified and the unknown value has a variable, that means that the equation must have
+        // been solved before being saved, so we must solve it again while making the variables
+        boolean shouldSolve = false;
+
         for (Map.Entry<String, Object> set : variableMap.entrySet()) {
-            if (set.getValue() != null) {
-                String name = set.getKey();
-                Double value = Double.valueOf(set.getValue().toString());
-                equation.addValue(name, value);
+            String name = set.getKey();
+            Double value = Double.valueOf(set.getValue().toString());
+            if (name.equals(equation.getUnknown()) && value != null) {
+                shouldSolve = true;
             }
+            equation.addValue(name, value);
+
+        }
+
+        if (shouldSolve) {
+            equation.calculateResult();
         }
     }
 }

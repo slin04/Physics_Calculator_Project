@@ -1,0 +1,12 @@
+{"Equations": [
+    {
+        "variables": {},
+        "Equation Type": "Force",
+        "unknown": "null"
+    },
+    {
+        "variables": {"m": 10},
+        "Equation Type": "Density",
+        "unknown": "d"
+    }
+]}

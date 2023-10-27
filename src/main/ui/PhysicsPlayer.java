@@ -16,11 +16,13 @@ import java.lang.NumberFormatException;
 public class PhysicsPlayer {
 
     private Equations equations;
+
+    private boolean isRunning = true;
+    private int selected = 1;
+
     private static final String JSON_STORE = "./data/equations.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
-
-    int selected = 1;
 
     // Creates a new set of equations and starts the program
     public PhysicsPlayer() {
@@ -33,7 +35,7 @@ public class PhysicsPlayer {
     // EFFECTS: runs the program by taking user input which is then processed
     public void run() {
         System.out.println("Welcome to the Physics Calculator!\nEnter \"help\" to view commands!");
-        while (true) {
+        while (isRunning) {
             Scanner userInput = new Scanner(System.in);
             processInput(userInput.nextLine());
         }
@@ -64,6 +66,8 @@ public class PhysicsPlayer {
             saveEquations();
         } else if (input.equals("load")) {
             loadEquations();
+        } else if (input.equals("quit")) {
+            isRunning = false;
         } else {
             System.out.println("Please enter a valid command. Enter \"help\" to view commands!");
         }
@@ -81,7 +85,8 @@ public class PhysicsPlayer {
         System.out.println("view - displays status of selected equation");
         System.out.println("view all - displays status of all equations in list");
         System.out.println("save - saves equations to file");
-        System.out.println("load - loads equations from file\n");
+        System.out.println("load - loads equations from file");
+        System.out.println("quit - quits the application\n");
         System.out.println("NOTE: The list of equations starts with an index at 1. This means that the first equation"
                             + " added to the list will have index 1, the second equation will have index 2, etc");
     }
@@ -268,7 +273,7 @@ public class PhysicsPlayer {
             System.out.println(("You have no equations right now! Use \"new eq\" to make one!"));
         } else {
             Equation currentEq = (equations.getEquation(selected - 1));
-            if (readyToSolve(currentEq)) {
+            if (currentEq.readyToSolve()) {
                 Double result = currentEq.calculateResult();
                 System.out.println("Equation solved successfully! Result is: " + String.valueOf(result));
             } else {
@@ -276,25 +281,6 @@ public class PhysicsPlayer {
                                     + " are specified.");
             }
         }
-    }
-
-    // EFFECTS: checks that unknown is instantiated, and all known variables have values
-    private boolean readyToSolve(Equation currentEq) {
-        HashMap<String, Double> variables = currentEq.getVariables();
-
-        if (currentEq.getUnknown() == null) {
-            return false;
-        }
-
-        String unknownVar = currentEq.getUnknown();
-
-        for (String i: variables.keySet()) {
-            if (!i.equals(unknownVar) && variables.get(i) == null) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     // EFFECTS: returns names of all variables in the currently selected equation

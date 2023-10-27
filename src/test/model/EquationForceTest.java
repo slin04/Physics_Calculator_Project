@@ -158,4 +158,25 @@ public class EquationForceTest {
                 "a : 5.0";
         assertEquals(expected, forceEq.displayEquationState());
     }
+
+    @Test
+    void testReadyToSolveNothing() {
+        assertFalse(forceEq.readyToSolve());
+    }
+
+    @Test
+    void testReadyToSolvePartiallySpecified() {
+        forceEq.specifyUnknown("f");
+        assertFalse(forceEq.readyToSolve());
+        forceEq.addValue("m", 80);
+        assertFalse(forceEq.readyToSolve());
+    }
+
+    @Test
+    void testReadyToSolveTrue() {
+        forceEq.specifyUnknown("f");
+        forceEq.addValue("m", 80);
+        forceEq.addValue("a", 20);
+        assertTrue(forceEq.readyToSolve());
+    }
 }

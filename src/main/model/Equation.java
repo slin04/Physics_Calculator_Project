@@ -70,6 +70,21 @@ public abstract class Equation implements Writable {
     // EFFECTS: displays equation information as a String
     public abstract String displayEquationState();
 
+    // EFFECTS: checks that unknown is instantiated, and all known variables have values
+    public boolean readyToSolve() {
+
+        if (unknown == null) {
+            return false;
+        }
+
+        for (String i: variables.keySet()) {
+            if (!i.equals(unknown) && variables.get(i) == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
