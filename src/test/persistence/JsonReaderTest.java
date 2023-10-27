@@ -2,6 +2,7 @@ package persistence;
 
 import model.Equation;
 import model.Equations;
+import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

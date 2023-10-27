@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import org.json.JSONException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 

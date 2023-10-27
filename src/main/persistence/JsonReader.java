@@ -106,7 +106,7 @@ public class JsonReader {
         for (Map.Entry<String, Object> set : variableMap.entrySet()) {
             String name = set.getKey();
             Double value = Double.valueOf(set.getValue().toString());
-            if (name.equals(equation.getUnknown()) && value != null) {
+            if (name.equals(equation.getUnknown())) {
                 shouldSolve = true;
             }
             equation.addValue(name, value);
