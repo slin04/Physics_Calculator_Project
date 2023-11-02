@@ -28,3 +28,12 @@ and see the new result.
 
 - As a user, I want to be able to save the entire list of equations to file.
 - As a user, I want to be able to load my list of equations from file.
+
+### Instructions To Grader
+
+- Right click the Main file to run the Physics Calculator GUI
+- Click New Equation to add a new equation.
+- Click Delete Equation to delete the selected equation.
+- You can find my visual component in the middle of the GUI.
+- Click Save to save the equations from file.
+- Click Load to load in equations from file.

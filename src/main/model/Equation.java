@@ -85,7 +85,7 @@ public abstract class Equation implements Writable {
     }
 
     @Override
-    // Converts equation to JSONObject
+    // EFFECTS: Converts equation to JSONObject
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Equation Type", getEqType());
