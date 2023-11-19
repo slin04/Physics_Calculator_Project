@@ -1,1 +1,21 @@
-{"Equations": []}
+{"Equations": [
+    {
+        "variables": {},
+        "Equation Type": "Force",
+        "unknown": "f"
+    },
+    {
+        "variables": {
+            "d": 2.857142857142857,
+            "m": 100,
+            "v": 35
+        },
+        "Equation Type": "Density",
+        "unknown": "d"
+    },
+    {
+        "variables": {},
+        "Equation Type": "Flow Rate",
+        "unknown": "null"
+    }
+]}
