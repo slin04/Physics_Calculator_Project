@@ -1,7 +1,6 @@
 package ui;
 
-import model.Equation;
-import model.Equations;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -13,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Scanner;
 
 // Represents the gui that allows the user to use the physics app
 
@@ -26,8 +27,11 @@ public class PhysicsWindow {
     private JPanel southPanel;
     private JPanel northPanel;
     private JPanel westPanel;
+    private JPanel centerPanel;
     private JPanel equationScrollPanel;
     private HelpWindow helpWindow;
+    private NewEqWindow newEqWindow;
+    private JLabel equationInfoLabel;
 
     private Equations equations;
     private ArrayList<JButton> equationButtons; // list of buttons corresponding to each equation
@@ -45,6 +49,7 @@ public class PhysicsWindow {
         jsonReader = new JsonReader(JSON_STORE);
         this.initialize();
         helpWindow = new HelpWindow();
+        newEqWindow = new NewEqWindow(this);
     }
 
     // initialize with JFrame settings
@@ -53,6 +58,7 @@ public class PhysicsWindow {
         this.setNorthPanel();
         this.setSouthPanel();
         this.setWestPanel();
+        this.setCenterPanel();
         frame.setVisible(true);
     }
 
@@ -113,13 +119,6 @@ public class PhysicsWindow {
 
         equationScrollPanel.setLayout(new GridLayout(0, 1, 10, 10));
 
-//        for (int i = 0; i < 20; i++) {
-//            JButton testButton = new JButton("Equation" + String.valueOf(i));
-//            testButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-//            testButton.setPreferredSize(new Dimension(200, 50));
-//            equationScrollPanel.add(testButton);
-//        }
-
         JScrollPane scrollPane = new JScrollPane(equationScrollPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -134,6 +133,21 @@ public class PhysicsWindow {
         frame.add(westPanel, BorderLayout.WEST);
     }
 
+    private void setCenterPanel() {
+        centerPanel = new JPanel();
+        centerPanel.setLayout(new GridLayout(2, 1));
+        JLabel header = new JLabel("Current Equation");
+        header.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+
+        equationInfoLabel = new JLabel();
+        equationInfoLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
+
+        centerPanel.add(header);
+        centerPanel.add(equationInfoLabel);
+
+        frame.add(centerPanel, BorderLayout.CENTER);
+    }
+
     private JButton makeNewEqButton() {
         JButton newEqButton = new JButton("New Equation");
         newEqButton.setFocusable(false);
@@ -142,6 +156,7 @@ public class PhysicsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("This should create a new equation!");
+                newEqWindow.show();
             }
         });
 
@@ -232,6 +247,8 @@ public class PhysicsWindow {
     // EFFECTS: produces buttons for each equation
     private void loadButtons() {
         List<Equation> equationList = equations.getListOfEquations();
+        equationButtons.clear();
+        equationScrollPanel.removeAll();
         for (Equation e: equationList) {
             JButton eqButton = new JButton(e.getEqType());
             eqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
@@ -249,10 +266,57 @@ public class PhysicsWindow {
         }
     }
 
+    public void makeEquation(String input) {
+        System.out.println("Making Equation of Type: " + input);
+        if (input.equals("Force")) {
+            newEquationForce();
+        } else if (input.equals("Density")) {
+            newEquationDensity();
+        } else if (input.equals("Flow Rate")) {
+            newEquationFlowRate();
+        }
+        loadButtons();
+        selected = equations.getListOfEquations().size() - 1;
+        displayEquation(selected);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates new force equation
+    private void newEquationForce() {
+        Equation newForceEq = new EquationForce();
+        equations.addNewEquation(newForceEq);
+        System.out.println("Made Force Equation! Force Equation is selected!");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates new density equation
+    private void newEquationDensity() {
+        Equation newDensityEq = new EquationDensity();
+        equations.addNewEquation(newDensityEq);
+        System.out.println("Made Density Equation! Density Equation is selected!");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates new density equation
+    private void newEquationFlowRate() {
+        Equation newFlowRateEq = new EquationFlowRate();
+        equations.addNewEquation(newFlowRateEq);
+        System.out.println("Made Flow Rate Equation! Flow Rate Equation is selected!");
+    }
+
     // MODIFES: this
     // EFFECTS: given the selected index, displays the currently selected equation in the main panel
     private void displayEquation(int selected) {
-        System.out.println(equations.getEquation(selected).displayEquationState() + "\n");
+
+        String equationInfo = equations.getEquation(selected).displayEquationState();
+        HashMap<String, Double> variables = equations.getEquation(selected).getVariables();
+        for (String varname: variables.keySet()) {
+            String varDisplay = varname + ": " + String.valueOf(variables.get(varname));
+            System.out.println(varDisplay);
+        }
+        // equationInfoLabel.setText("<html><p style=\"width:200px\">" + equationInfo + "</p></html>");
+        equationInfoLabel.setText(equationInfo);
+        System.out.println(equationInfo + "\n");
     }
 
     // EFFECTS: saves the equations to file

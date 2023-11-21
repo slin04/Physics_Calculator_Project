@@ -17,5 +17,10 @@
         "variables": {},
         "Equation Type": "Flow Rate",
         "unknown": "null"
+    },
+    {
+        "variables": {},
+        "Equation Type": "Density",
+        "unknown": "null"
     }
 ]}
