@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.HashMap;
+import java.util.List;
 
 // Represents an equation with a hashmap with the keys representing variable names, and the values representing
 // variable values
@@ -47,7 +48,7 @@ public abstract class Equation implements Writable {
 
     // REQUIRES: var is in variables
     // EFFECTS: returns value of desired variable in string format depending on if it is unknown or uninitialized
-    protected String getValue(String var) {
+    public String getValue(String var) {
         if (var.equals(unknown)) {
             if (variables.get(unknown) == null) {
                 return "unknown";

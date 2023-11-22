@@ -69,8 +69,8 @@ public class NewEqWindow {
         newEqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
                 physicsWindow.makeEquation("Force");
+                frame.dispose();
             }
         });
 
@@ -84,8 +84,8 @@ public class NewEqWindow {
         newEqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
                 physicsWindow.makeEquation("Density");
+                frame.dispose();
             }
         });
 
@@ -99,8 +99,8 @@ public class NewEqWindow {
         newEqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
                 physicsWindow.makeEquation("Flow Rate");
+                frame.dispose();
             }
         });
 

@@ -171,6 +171,7 @@ public class PhysicsWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("This should delete the selected equation!");
+                deleteSelected();
             }
         });
         return deleteButton;
@@ -236,7 +237,9 @@ public class PhysicsWindow {
             equationButtons = new ArrayList<JButton>();
             equationScrollPanel.removeAll();
             equations = jsonReader.read();
+            selected = 0;
             loadButtons();
+            displayEquationText();
             System.out.println("Loaded equations from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -250,20 +253,31 @@ public class PhysicsWindow {
         equationButtons.clear();
         equationScrollPanel.removeAll();
         for (Equation e: equationList) {
-            JButton eqButton = new JButton(e.getEqType());
-            eqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-            eqButton.setPreferredSize(new Dimension(200, 50));
-            eqButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent a) {
-                    selected = equationList.indexOf(e);
-                    displayEquation(selected);
-                }
-            });
-            equationButtons.add(eqButton);
-            equationScrollPanel.add(eqButton);
-            frame.setVisible(true);
+            loadButton(e);
         }
+        frame.setVisible(true);
+    }
+
+    private void loadButton(Equation e) {
+        List<Equation> equationList = equations.getListOfEquations();
+        JButton eqButton = new JButton(e.getEqType() + " Equation");
+        eqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
+        eqButton.setPreferredSize(new Dimension(200, 50));
+        if (equationList.indexOf(e) == selected) {
+            eqButton.setBackground(Color.MAGENTA);
+        } else {
+            eqButton.setBackground(Color.GREEN);
+        }
+        eqButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                selected = equationList.indexOf(e);
+                displayEquation();
+            }
+        });
+        equationButtons.add(eqButton);
+        equationScrollPanel.add(eqButton);
+        frame.setVisible(true);
     }
 
     public void makeEquation(String input) {
@@ -277,7 +291,7 @@ public class PhysicsWindow {
         }
         loadButtons();
         selected = equations.getListOfEquations().size() - 1;
-        displayEquation(selected);
+        displayEquation();
     }
 
     // MODIFIES: this
@@ -304,19 +318,43 @@ public class PhysicsWindow {
         System.out.println("Made Flow Rate Equation! Flow Rate Equation is selected!");
     }
 
+    private void deleteSelected() {
+        List<Equation> equationList = equations.getListOfEquations();
+        if (equationList.size() > 0) {
+            equationList.remove(selected);
+            equationButtons.remove(selected);
+            selected = 0;
+            loadButtons();
+            if (equationList.size() > 0) {
+                displayEquation();
+            } else {
+                equationInfoLabel.setText("");
+            }
+        }
+    }
+
     // MODIFES: this
     // EFFECTS: given the selected index, displays the currently selected equation in the main panel
-    private void displayEquation(int selected) {
+    private void displayEquation() {
+        loadButtons();
+        displayEquationText();
+    }
 
-        String equationInfo = equations.getEquation(selected).displayEquationState();
-        HashMap<String, Double> variables = equations.getEquation(selected).getVariables();
-        for (String varname: variables.keySet()) {
-            String varDisplay = varname + ": " + String.valueOf(variables.get(varname));
-            System.out.println(varDisplay);
+    private void displayEquationText() {
+        Equation eqSelected = equations.getEquation(selected);
+
+        String equationInfo = "<html><body>";
+        HashMap<String, Double> variables = eqSelected.getVariables();
+
+        equationInfo += "Equation Type" + ": " + eqSelected.getEqType() + "<br>";
+
+        for (String s: variables.keySet()) {
+            equationInfo += s + ": " + eqSelected.getValue(s) + "<br>";
         }
-        // equationInfoLabel.setText("<html><p style=\"width:200px\">" + equationInfo + "</p></html>");
+
+        equationInfo += "</body></html>";
+
         equationInfoLabel.setText(equationInfo);
-        System.out.println(equationInfo + "\n");
     }
 
     // EFFECTS: saves the equations to file
