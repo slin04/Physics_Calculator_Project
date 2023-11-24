@@ -450,6 +450,7 @@ public class PhysicsWindow {
             } else {
                 equationInfoLabel.setText("");
                 loadUnknownButtons();
+                loadInputsPanel();
             }
         }
     }
