@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
-import java.util.Scanner;
 
 // Represents the gui that allows the user to use the physics app
 
@@ -32,6 +31,8 @@ public class PhysicsWindow {
     private HelpWindow helpWindow;
     private NewEqWindow newEqWindow;
     private JLabel equationInfoLabel;
+    private JPanel unknownsPanel;
+    private JPanel inputsPanel;
 
     private Equations equations;
     private ArrayList<JButton> equationButtons; // list of buttons corresponding to each equation
@@ -85,6 +86,7 @@ public class PhysicsWindow {
         southPanel.add(this.makeSolveButton());
         southPanel.add(this.makeHelpButton());
 
+
         frame.add(southPanel, BorderLayout.SOUTH);
     }
 
@@ -135,21 +137,45 @@ public class PhysicsWindow {
 
     private void setCenterPanel() {
         centerPanel = new JPanel();
-        centerPanel.setLayout(new GridLayout(2, 1));
+        // centerPanel.setLayout(new GridLayout(2, 1));
+
+        centerPanel.setLayout(new GridBagLayout());
+
         JLabel header = new JLabel("Current Equation");
         header.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 
         equationInfoLabel = new JLabel();
         equationInfoLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 
-        centerPanel.add(header);
-        centerPanel.add(equationInfoLabel);
+        unknownsPanel = new JPanel();
+        unknownsPanel.setLayout(new GridLayout(0, 1));
+
+        inputsPanel = new JPanel();
+        inputsPanel.setLayout(new GridLayout(0, 1));
+
+        centerPanel.add(header, createGridBagConstraints(0,0));
+
+        centerPanel.add(equationInfoLabel, createGridBagConstraints(0,1));
+
+        centerPanel.add(unknownsPanel, createGridBagConstraints(1,1));
+
+        centerPanel.add(inputsPanel, createGridBagConstraints(2,1));
 
         frame.add(centerPanel, BorderLayout.CENTER);
     }
 
+    private GridBagConstraints createGridBagConstraints(int x, int y) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = x;
+        gbc.gridy = y;
+        int gap = 5;
+        gbc.insets = new Insets(gap, gap + 2 * gap * x, gap, gap);
+        return gbc;
+    }
+
     private JButton makeNewEqButton() {
         JButton newEqButton = new JButton("New Equation");
+        newEqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         newEqButton.setFocusable(false);
         newEqButton.setToolTipText("Creates a new equation of a specific type");
         newEqButton.addActionListener(new ActionListener() {
@@ -165,6 +191,7 @@ public class PhysicsWindow {
 
     private JButton makeDeleteButton() {
         JButton deleteButton = new JButton("Delete Equation");
+        deleteButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         deleteButton.setFocusable(false);
         deleteButton.setToolTipText("Deletes the currently selected equation");
         deleteButton.addActionListener(new ActionListener() {
@@ -179,6 +206,7 @@ public class PhysicsWindow {
 
     private JButton makeSaveButton() {
         JButton saveButton = new JButton("Save Data");
+        saveButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         saveButton.setToolTipText("Saves list of all current equations to file");
         saveButton.setFocusable(false);
         saveButton.addActionListener(new ActionListener() {
@@ -192,6 +220,7 @@ public class PhysicsWindow {
 
     private JButton makeLoadButton() {
         JButton loadButton = new JButton("Load Data");
+        loadButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         loadButton.setToolTipText("Loads previous list of equations to file");
         loadButton.setFocusable(false);
         loadButton.addActionListener(new ActionListener() {
@@ -205,12 +234,14 @@ public class PhysicsWindow {
 
     private JButton makeSolveButton() {
         JButton solveButton = new JButton("Solve Equation");
+        solveButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         solveButton.setFocusable(false);
         solveButton.setToolTipText("Tries to solve the currently selected equation");
         solveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("This should try to solve the selected equation!");
+                solveSelected();
             }
         });
         return solveButton;
@@ -218,6 +249,7 @@ public class PhysicsWindow {
 
     private JButton makeHelpButton() {
         JButton helpButton = new JButton("Help");
+        helpButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
         helpButton.setFocusable(false);
         helpButton.setToolTipText("Click here for help");
         helpButton.addActionListener(new ActionListener() {
@@ -238,8 +270,7 @@ public class PhysicsWindow {
             equationScrollPanel.removeAll();
             equations = jsonReader.read();
             selected = 0;
-            loadButtons();
-            displayEquationText();
+            displayEquation();
             System.out.println("Loaded equations from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -248,17 +279,17 @@ public class PhysicsWindow {
 
     // MODIFIES: this
     // EFFECTS: produces buttons for each equation
-    private void loadButtons() {
+    private void loadEquationButtons() {
         List<Equation> equationList = equations.getListOfEquations();
         equationButtons.clear();
         equationScrollPanel.removeAll();
         for (Equation e: equationList) {
-            loadButton(e);
+            loadEquationButton(e);
         }
         frame.setVisible(true);
     }
 
-    private void loadButton(Equation e) {
+    private void loadEquationButton(Equation e) {
         List<Equation> equationList = equations.getListOfEquations();
         JButton eqButton = new JButton(e.getEqType() + " Equation");
         eqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
@@ -280,6 +311,66 @@ public class PhysicsWindow {
         frame.setVisible(true);
     }
 
+    private void loadUnknownButtons() {
+        unknownsPanel.removeAll();
+        System.out.println("should load unknown buttons");
+        if (equations.getListOfEquations().size() > 0) {
+            for (String s: equations.getEquation(selected).getVariables().keySet()) {
+                loadUnknownButton(s);
+            }
+        }
+        frame.setVisible(true);
+    }
+
+    private void loadUnknownButton(String s) {
+        JButton unknownButton = new JButton("Unknown: " + s);
+        unknownButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
+        unknownButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                equations.getEquation(selected).specifyUnknown(s);
+                displayEquationText();
+            }
+        });
+        unknownsPanel.add(unknownButton);
+    }
+
+    private void loadInputsPanel() {
+        inputsPanel.removeAll();
+        System.out.println("should load input buttons");
+        if (equations.getListOfEquations().size() > 0) {
+            for (String s: equations.getEquation(selected).getVariables().keySet()) {
+                loadInput(s);
+            }
+        }
+        frame.setVisible(true);
+    }
+
+    private void loadInput(String s) {
+        JPanel inputPanel = new JPanel();
+        JTextField inputTextField = new JTextField(10);
+        JButton inputButton = new JButton("Enter value for: " + s);
+        inputButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
+        inputButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent a) {
+                String content = inputTextField.getText();
+                String input = inputTextField.getText();
+                try {
+                    Double valueToAdd = Double.parseDouble(input);
+                    equations.getEquation(selected).addValue(s, valueToAdd);
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a Double value:");
+                }
+                displayEquationText();
+            }
+        });
+
+        inputPanel.add(inputTextField);
+        inputPanel.add(inputButton);
+        inputsPanel.add(inputPanel);
+    }
+
     public void makeEquation(String input) {
         System.out.println("Making Equation of Type: " + input);
         if (input.equals("Force")) {
@@ -289,7 +380,7 @@ public class PhysicsWindow {
         } else if (input.equals("Flow Rate")) {
             newEquationFlowRate();
         }
-        loadButtons();
+        loadEquationButtons();
         selected = equations.getListOfEquations().size() - 1;
         displayEquation();
     }
@@ -324,11 +415,31 @@ public class PhysicsWindow {
             equationList.remove(selected);
             equationButtons.remove(selected);
             selected = 0;
-            loadButtons();
+            loadEquationButtons();
             if (equationList.size() > 0) {
                 displayEquation();
             } else {
                 equationInfoLabel.setText("");
+                loadUnknownButtons();
+            }
+        }
+    }
+
+    private void solveSelected() {
+        List<Equation> equationList = equations.getListOfEquations();
+        if (equationList.size() > 0) {
+            Equation currentEq = (equations.getEquation(selected));
+            if (currentEq.readyToSolve()) {
+                currentEq.calculateResult();
+            } else {
+                System.out.println("Could not solve equation - make sure that all variables except unknown variable"
+                        + " are specified.");
+            }
+            if (equationList.size() > 0) {
+                displayEquation();
+            } else {
+                equationInfoLabel.setText("");
+                loadUnknownButtons();
             }
         }
     }
@@ -336,25 +447,30 @@ public class PhysicsWindow {
     // MODIFES: this
     // EFFECTS: given the selected index, displays the currently selected equation in the main panel
     private void displayEquation() {
-        loadButtons();
+        loadEquationButtons();
         displayEquationText();
+        loadUnknownButtons();
+        loadInputsPanel();
     }
 
     private void displayEquationText() {
-        Equation eqSelected = equations.getEquation(selected);
+        if (equations.getListOfEquations().size() > 0) {
+            Equation eqSelected = equations.getEquation(selected);
 
-        String equationInfo = "<html><body>";
-        HashMap<String, Double> variables = eqSelected.getVariables();
+            String equationInfo = "<html><body>";
+            HashMap<String, Double> variables = eqSelected.getVariables();
 
-        equationInfo += "Equation Type" + ": " + eqSelected.getEqType() + "<br>";
+            equationInfo += "Equation Type" + ": " + eqSelected.getEqType() + "<br>";
 
-        for (String s: variables.keySet()) {
-            equationInfo += s + ": " + eqSelected.getValue(s) + "<br>";
+            for (String s: variables.keySet()) {
+                equationInfo += s + ": " + eqSelected.getValue(s) + "<br>";
+            }
+
+            equationInfo += "</body></html>";
+
+            equationInfoLabel.setText(equationInfo);
         }
 
-        equationInfo += "</body></html>";
-
-        equationInfoLabel.setText(equationInfo);
     }
 
     // EFFECTS: saves the equations to file

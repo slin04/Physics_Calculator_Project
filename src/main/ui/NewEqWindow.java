@@ -64,6 +64,7 @@ public class NewEqWindow {
 
     private JButton makeForceEqButton() {
         JButton newEqButton = new JButton("Force");
+        newEqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         newEqButton.setFocusable(false);
         newEqButton.setToolTipText("Make Force Equation");
         newEqButton.addActionListener(new ActionListener() {
@@ -79,6 +80,7 @@ public class NewEqWindow {
 
     private JButton makeDensityEqButton() {
         JButton newEqButton = new JButton("Density");
+        newEqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         newEqButton.setFocusable(false);
         newEqButton.setToolTipText("Make Density Equation");
         newEqButton.addActionListener(new ActionListener() {
@@ -94,6 +96,7 @@ public class NewEqWindow {
 
     private JButton makeFlowRateEqButton() {
         JButton newEqButton = new JButton("Flow Rate");
+        newEqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
         newEqButton.setFocusable(false);
         newEqButton.setToolTipText("Make Flow Rate Equation");
         newEqButton.addActionListener(new ActionListener() {
