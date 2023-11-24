@@ -384,7 +384,6 @@ public class PhysicsWindow {
         inputButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
-                String content = inputTextField.getText();
                 String input = inputTextField.getText();
                 try {
                     Double valueToAdd = Double.parseDouble(input);
