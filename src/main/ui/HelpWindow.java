@@ -10,15 +10,21 @@ public class HelpWindow {
     private JFrame frame;
     private JPanel mainPanel;
 
+    // MODIFIES: this
+    // EFFECTS: Initializes the main window
     public HelpWindow() {
         setFrame();
         setMainPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: makes window visible
     public void show() {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up frame
     private void setFrame() {
         frame = new JFrame();
         frame.setTitle("Help Window");
@@ -29,6 +35,8 @@ public class HelpWindow {
         frame.setLocationRelativeTo(null);
     }
 
+    // MODIFIES: this
+    // EFFECTS: set main panel with uplifting image and picture
     private void setMainPanel() {
         mainPanel = new JPanel();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

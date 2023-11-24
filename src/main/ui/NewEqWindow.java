@@ -5,8 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// A window for help
-// // Graphic from: https://freevivedsmileys.wixsite.com/freevived-smileys-de
+// A window for creating a new equation
 public class NewEqWindow {
 
     private JFrame frame;
@@ -14,7 +13,8 @@ public class NewEqWindow {
     private JPanel northPanel;
     private PhysicsWindow physicsWindow;
 
-
+    // MODIFIES: this
+    // EFFECTS: Initializes the main window
     public NewEqWindow(PhysicsWindow physicsWindow) {
         setFrame();
         setMainPanel();
@@ -22,10 +22,14 @@ public class NewEqWindow {
         this.physicsWindow = physicsWindow;
     }
 
+    // MODIFIES: this
+    // EFFECTS: shows window
     public void show() {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets up the frame
     private void setFrame() {
         frame = new JFrame();
         frame.setTitle("New Equation Window");
@@ -36,6 +40,8 @@ public class NewEqWindow {
         frame.setLocationRelativeTo(null);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets the north panel
     private void setNorthPanel() {
         northPanel = new JPanel();
         northPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -50,6 +56,8 @@ public class NewEqWindow {
         frame.add(northPanel, BorderLayout.NORTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets the main panel with all the buttons
     private void setMainPanel() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(3, 1));
@@ -62,6 +70,8 @@ public class NewEqWindow {
         frame.add(mainPanel, BorderLayout.CENTER);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Makes force equation button
     private JButton makeForceEqButton() {
         JButton newEqButton = new JButton("Force");
         newEqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
@@ -78,6 +88,8 @@ public class NewEqWindow {
         return newEqButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Makes density equation button
     private JButton makeDensityEqButton() {
         JButton newEqButton = new JButton("Density");
         newEqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));
@@ -94,6 +106,8 @@ public class NewEqWindow {
         return newEqButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Makes flow rate equation button
     private JButton makeFlowRateEqButton() {
         JButton newEqButton = new JButton("Flow Rate");
         newEqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 16));

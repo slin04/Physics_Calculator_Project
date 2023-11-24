@@ -31,9 +31,10 @@ and see the new result.
 
 ### Instructions To Grader
 
-- Right click the Main file to run the Physics Calculator GUI
-- Click New Equation to add a new equation.
-- Click Delete Equation to delete the selected equation.
-- You can find my visual component at the top of the GUI, or when clicking the help button
-- Click Save to save the equations from file.
-- Click Load to load in equations from file.
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by 
+clicking "New Equation".
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by 
+clicking "Delete Equation".
+- You can locate my visual component by clicking "Help".
+- You can save the state of my application by clicking "Save Data".
+- You can reload the state of my application by clicking "Load Data".

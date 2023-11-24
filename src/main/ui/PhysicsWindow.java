@@ -43,6 +43,8 @@ public class PhysicsWindow {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    // MODIFIES: this
+    // EFFECTS: Initializes the main window
     public PhysicsWindow() {
         equations = new Equations();
         equationButtons = new ArrayList<JButton>();
@@ -53,7 +55,8 @@ public class PhysicsWindow {
         newEqWindow = new NewEqWindow(this);
     }
 
-    // initialize with JFrame settings
+    // MODIFIES: this
+    // EFFECTS: Sets all panels in jframe
     private void initialize() {
         this.setFrame();
         this.setNorthPanel();
@@ -63,6 +66,8 @@ public class PhysicsWindow {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets up frame settings
     private void setFrame() {
         frame = new JFrame();
         frame.setTitle("Physics App");
@@ -73,6 +78,8 @@ public class PhysicsWindow {
         frame.setLocationRelativeTo(null);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets the south panel
     private void setSouthPanel() {
         southPanel = new JPanel();
         // southPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 5));
@@ -90,6 +97,8 @@ public class PhysicsWindow {
         frame.add(southPanel, BorderLayout.SOUTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets the north panel
     private void setNorthPanel() {
         northPanel = new JPanel();
         northPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -113,6 +122,8 @@ public class PhysicsWindow {
         frame.add(northPanel, BorderLayout.NORTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets the west panel
     private void setWestPanel() {
         westPanel = new JPanel();
         westPanel.setLayout(new BoxLayout(westPanel, BoxLayout.Y_AXIS));
@@ -135,6 +146,8 @@ public class PhysicsWindow {
         frame.add(westPanel, BorderLayout.WEST);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Sets the center panel
     private void setCenterPanel() {
         centerPanel = new JPanel();
         // centerPanel.setLayout(new GridLayout(2, 1));
@@ -164,6 +177,7 @@ public class PhysicsWindow {
         frame.add(centerPanel, BorderLayout.CENTER);
     }
 
+    // EFFECTS: Creates GridBagConstraints object with specified x, y, and gaps
     private GridBagConstraints createGridBagConstraints(int x, int y) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = x;
@@ -173,6 +187,8 @@ public class PhysicsWindow {
         return gbc;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates the new equation button
     private JButton makeNewEqButton() {
         JButton newEqButton = new JButton("New Equation");
         newEqButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -181,7 +197,6 @@ public class PhysicsWindow {
         newEqButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("This should create a new equation!");
                 newEqWindow.show();
             }
         });
@@ -189,6 +204,8 @@ public class PhysicsWindow {
         return newEqButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates the delete equation button
     private JButton makeDeleteButton() {
         JButton deleteButton = new JButton("Delete Equation");
         deleteButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -197,13 +214,14 @@ public class PhysicsWindow {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("This should delete the selected equation!");
                 deleteSelected();
             }
         });
         return deleteButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates the save button
     private JButton makeSaveButton() {
         JButton saveButton = new JButton("Save Data");
         saveButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -218,6 +236,8 @@ public class PhysicsWindow {
         return saveButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates the load button
     private JButton makeLoadButton() {
         JButton loadButton = new JButton("Load Data");
         loadButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -232,6 +252,8 @@ public class PhysicsWindow {
         return loadButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates the solve button
     private JButton makeSolveButton() {
         JButton solveButton = new JButton("Solve Equation");
         solveButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -240,13 +262,14 @@ public class PhysicsWindow {
         solveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("This should try to solve the selected equation!");
                 solveSelected();
             }
         });
         return solveButton;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Creates the help button
     private JButton makeHelpButton() {
         JButton helpButton = new JButton("Help");
         helpButton.setFont(new Font("Comic Sans MS", Font.BOLD, 14));
@@ -255,7 +278,6 @@ public class PhysicsWindow {
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("This should display a helpful popup");
                 helpWindow.show();
             }
         });
@@ -278,7 +300,7 @@ public class PhysicsWindow {
     }
 
     // MODIFIES: this
-    // EFFECTS: produces buttons for each equation
+    // EFFECTS: loads buttons for each equation
     private void loadEquationButtons() {
         List<Equation> equationList = equations.getListOfEquations();
         equationButtons.clear();
@@ -289,6 +311,8 @@ public class PhysicsWindow {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads the button for the given equation
     private void loadEquationButton(Equation e) {
         List<Equation> equationList = equations.getListOfEquations();
         JButton eqButton = new JButton(e.getEqType() + " Equation");
@@ -311,9 +335,10 @@ public class PhysicsWindow {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads the specify unknown buttons for each variable in the currently selected equation
     private void loadUnknownButtons() {
         unknownsPanel.removeAll();
-        System.out.println("should load unknown buttons");
         if (equations.getListOfEquations().size() > 0) {
             for (String s: equations.getEquation(selected).getVariables().keySet()) {
                 loadUnknownButton(s);
@@ -322,6 +347,8 @@ public class PhysicsWindow {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads the specify unknown button for the given variable
     private void loadUnknownButton(String s) {
         JButton unknownButton = new JButton("Unknown: " + s);
         unknownButton.setFont(new Font("Comic Sans MS", Font.BOLD, 12));
@@ -335,9 +362,10 @@ public class PhysicsWindow {
         unknownsPanel.add(unknownButton);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads the panel of inputs for each variable in the currently selected equation
     private void loadInputsPanel() {
         inputsPanel.removeAll();
-        System.out.println("should load input buttons");
         if (equations.getListOfEquations().size() > 0) {
             for (String s: equations.getEquation(selected).getVariables().keySet()) {
                 loadInput(s);
@@ -346,6 +374,8 @@ public class PhysicsWindow {
         frame.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads the input for the given variable with a textfield and a submission button
     private void loadInput(String s) {
         JPanel inputPanel = new JPanel();
         JTextField inputTextField = new JTextField(10);
@@ -360,7 +390,7 @@ public class PhysicsWindow {
                     Double valueToAdd = Double.parseDouble(input);
                     equations.getEquation(selected).addValue(s, valueToAdd);
                 } catch (NumberFormatException e) {
-                    System.out.println("Please enter a Double value:");
+                    // System.out.println("Please enter a Double value:");
                 }
                 displayEquationText();
             }
@@ -371,8 +401,9 @@ public class PhysicsWindow {
         inputsPanel.add(inputPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: makes equation of given input type
     public void makeEquation(String input) {
-        System.out.println("Making Equation of Type: " + input);
         if (input.equals("Force")) {
             newEquationForce();
         } else if (input.equals("Density")) {
@@ -390,7 +421,6 @@ public class PhysicsWindow {
     private void newEquationForce() {
         Equation newForceEq = new EquationForce();
         equations.addNewEquation(newForceEq);
-        System.out.println("Made Force Equation! Force Equation is selected!");
     }
 
     // MODIFIES: this
@@ -398,7 +428,6 @@ public class PhysicsWindow {
     private void newEquationDensity() {
         Equation newDensityEq = new EquationDensity();
         equations.addNewEquation(newDensityEq);
-        System.out.println("Made Density Equation! Density Equation is selected!");
     }
 
     // MODIFIES: this
@@ -406,9 +435,10 @@ public class PhysicsWindow {
     private void newEquationFlowRate() {
         Equation newFlowRateEq = new EquationFlowRate();
         equations.addNewEquation(newFlowRateEq);
-        System.out.println("Made Flow Rate Equation! Flow Rate Equation is selected!");
     }
 
+    // MODIFIES: this
+    // EFFECTS: if there is at least 1 equation, deletes selected equation, changes selected value
     private void deleteSelected() {
         List<Equation> equationList = equations.getListOfEquations();
         if (equationList.size() > 0) {
@@ -425,6 +455,8 @@ public class PhysicsWindow {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: attempts to solve selected equation with given data
     private void solveSelected() {
         List<Equation> equationList = equations.getListOfEquations();
         if (equationList.size() > 0) {
@@ -432,19 +464,14 @@ public class PhysicsWindow {
             if (currentEq.readyToSolve()) {
                 currentEq.calculateResult();
             } else {
-                System.out.println("Could not solve equation - make sure that all variables except unknown variable"
-                        + " are specified.");
+                // System.out.println("Could not solve equation - make sure that all variables except unknown variable"
+                //         + " are specified.");
             }
-            if (equationList.size() > 0) {
-                displayEquation();
-            } else {
-                equationInfoLabel.setText("");
-                loadUnknownButtons();
-            }
+            displayEquation();
         }
     }
 
-    // MODIFES: this
+    // MODIFIES: this
     // EFFECTS: given the selected index, displays the currently selected equation in the main panel
     private void displayEquation() {
         loadEquationButtons();
@@ -453,6 +480,8 @@ public class PhysicsWindow {
         loadInputsPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays the current values of the selected equation
     private void displayEquationText() {
         if (equations.getListOfEquations().size() > 0) {
             Equation eqSelected = equations.getEquation(selected);

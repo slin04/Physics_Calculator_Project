@@ -1,6 +1,6 @@
 {"Equations": [
     {
-        "variables": {},
+        "variables": {"a": 19},
         "Equation Type": "Force",
         "unknown": "f"
     },
@@ -16,11 +16,6 @@
     {
         "variables": {},
         "Equation Type": "Flow Rate",
-        "unknown": "null"
-    },
-    {
-        "variables": {},
-        "Equation Type": "Density",
         "unknown": "null"
     }
 ]}
