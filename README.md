@@ -24,12 +24,12 @@ of each equation.
 - As a user, I want to be able to modify the input values for an equation from my list
 and see the new result.
 
-### Phase 2 
+### Phase 2: User Stories
 
 - As a user, I want to be able to save the entire list of equations to file.
 - As a user, I want to be able to load my list of equations from file.
 
-### Instructions To Grader
+### Phase 3: Instructions To Grader
 
 - You can generate the first required action related to the user story "adding multiple Xs to a Y" by 
 clicking "New Equation".
@@ -38,3 +38,36 @@ clicking "Delete Equation".
 - You can locate my visual component by clicking "Help".
 - You can save the state of my application by clicking "Save Data".
 - You can reload the state of my application by clicking "Load Data".
+
+### Phase 4: Task 2
+Tue Nov 28 17:53:37 PST 2023
+
+Added equation of type Force to equations list!
+
+Tue Nov 28 17:53:39 PST 2023
+
+Added equation of type Flow Rate to equations list!
+
+Tue Nov 28 17:53:41 PST 2023
+
+Removed equation at index: 1
+
+Tue Nov 28 17:53:44 PST 2023
+
+Added equation of type Density to equations list!
+
+Tue Nov 28 17:53:46 PST 2023
+
+Added equation of type Force to equations list!
+
+Tue Nov 28 17:53:47 PST 2023
+
+Removed equation at index: 0
+
+Tue Nov 28 17:53:49 PST 2023
+
+Removed equation at index: 1
+
+Tue Nov 28 17:53:50 PST 2023
+
+Removed equation at index: 0

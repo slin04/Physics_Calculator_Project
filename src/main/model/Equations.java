@@ -14,6 +14,8 @@ public class Equations implements Writable {
     // EFFECTS: adds equation to equationList
     public void addNewEquation(Equation equation) {
         equationList.add(equation);
+        EventLog.getInstance().logEvent(new Event("Added equation of type " + equation.getEqType()
+                + " to equations list!"));
     }
 
     // REQUIRES: equationIndex is non-negative and size of equationList is greater than equationIndex
@@ -22,6 +24,8 @@ public class Equations implements Writable {
     //          remove the equation from equationList
     public void removeEquation(int equationIndex) {
         equationList.remove(equationIndex);
+        EventLog.getInstance().logEvent(new Event("Removed equation at index: "
+                + String.valueOf(equationIndex)));
     }
 
     // EFFECTS: displays all equations on list by calling displayEquationState method on every equation

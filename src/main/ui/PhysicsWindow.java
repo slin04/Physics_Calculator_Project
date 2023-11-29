@@ -1,6 +1,7 @@
 package ui;
 
 import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -8,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,11 +74,21 @@ public class PhysicsWindow {
     private void setFrame() {
         frame = new JFrame();
         frame.setTitle("Physics App");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(1000, 600);
         frame.setLayout(new BorderLayout(5, 5));
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                for (Event event: EventLog.getInstance()) {
+                    System.out.println(event.toString());
+                }
+
+                frame.dispose();
+            }
+        });
     }
 
     // MODIFIES: this
@@ -441,7 +454,7 @@ public class PhysicsWindow {
     private void deleteSelected() {
         List<Equation> equationList = equations.getListOfEquations();
         if (equationList.size() > 0) {
-            equationList.remove(selected);
+            equations.removeEquation(selected);
             equationButtons.remove(selected);
             selected = 0;
             loadEquationButtons();
