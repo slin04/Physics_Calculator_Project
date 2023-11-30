@@ -71,3 +71,17 @@ Removed equation at index: 1
 Tue Nov 28 17:53:50 PST 2023
 
 Removed equation at index: 0
+
+### Phase 4: Task 3
+
+Given more time, one thing I could do to refactor the structure of my code is to introduce a new abstract class along 
+the lines of "PopupWindow", and have HelpWindow and NewEqWindow extend this abstract class. I would then have 
+PhysicsWindow contain a list of PopupWindow.
+
+The reason for doing this is that HelpWindow and NewEqWindow already share some functionality - they are new windows
+that pop up upon certain user actions. By abstracting their behaviour into a new abstract class, it would be easier to
+make similar pop-up windows if we wanted to add new functionality (such as a congratulations window that pops up when 
+the user solves an equation). However, one drawback is that NewEqWindow has some different functionality; it has a 
+bidirectional relationship so that it can tell PhysicsWindow to create specific equations. Deciding whether this
+bidirectionality should be part of the abstract class's behaviour or just unique to NewEqWindow would require more 
+planning about the types of new pop-up windows that we would want to create in the future.
