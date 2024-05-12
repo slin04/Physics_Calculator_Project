@@ -8,7 +8,6 @@ public class Main {
     public static void main(String[] args) {
         // PhysicsPlayer physicsPlayer = new PhysicsPlayer();
         runPhysicsWindow();
-
     }
 
     public static void runPhysicsWindow() {

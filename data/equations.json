@@ -1,17 +1,27 @@
 {"Equations": [
     {
-        "variables": {"a": 19},
+        "variables": {
+            "a": 3,
+            "m": 5,
+            "f": 15
+        },
         "Equation Type": "Force",
         "unknown": "f"
     },
     {
         "variables": {
-            "d": 2.857142857142857,
-            "m": 100,
-            "v": 35
+            "a1": 341,
+            "a2": 23,
+            "v1": 13,
+            "v2": 192.7391304347826
         },
+        "Equation Type": "Flow Rate",
+        "unknown": "v2"
+    },
+    {
+        "variables": {},
         "Equation Type": "Density",
-        "unknown": "d"
+        "unknown": "null"
     },
     {
         "variables": {},
